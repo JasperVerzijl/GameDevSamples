@@ -12,11 +12,11 @@ namespace SpaceDefence
         public SpaceDefence()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.IsFullScreen = false;
+            _graphics.IsFullScreen = true;
 
             // Set the size of the screen
             _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.PreferredBackBufferHeight = 1200;
+            _graphics.PreferredBackBufferHeight = 1000;
             
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -50,6 +50,52 @@ namespace SpaceDefence
                 Exit();
             _gameManager.Update(gameTime);
             base.Update(gameTime);
+            KeyboardState kstate = Keyboard.GetState();
+            // move the spaceship
+            if (kstate.IsKeyDown(Keys.Up))
+            {
+                _gameManager.Player.MoveUp();
+            }
+            if (kstate.IsKeyDown(Keys.Down))
+            {
+                _gameManager.Player.MoveDown();
+            }
+            if (kstate.IsKeyDown(Keys.Left))
+            {
+                _gameManager.Player.MoveLeft();
+            }
+            if (kstate.IsKeyDown(Keys.Right))
+            {
+                _gameManager.Player.MoveRight();
+            }
+
+
+            // Screen wrapping logic
+            Rectangle playerPosition = _gameManager.Player.GetPosition();
+            Point newPosition = playerPosition.Location;
+            int shipWidth = _gameManager.Player.GetWidth();
+            int shipHeight = _gameManager.Player.GetHeight();
+
+            if (playerPosition.Y + shipHeight < 0)
+            {
+                newPosition.Y = GraphicsDevice.Viewport.Height;
+            }
+            else if (playerPosition.Y > GraphicsDevice.Viewport.Height)
+            {
+                newPosition.Y = -shipHeight;
+            }
+
+            if (playerPosition.X + shipWidth < 0)
+            {
+                newPosition.X = GraphicsDevice.Viewport.Width;
+            }
+            else if (playerPosition.X > GraphicsDevice.Viewport.Width)
+            {
+                newPosition.X = -shipWidth;
+            }
+
+            // Update the player's position
+            _gameManager.Player.UpdatePosition(newPosition);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -59,8 +105,5 @@ namespace SpaceDefence
 
             base.Draw(gameTime);
         }
-
-
-
     }
 }

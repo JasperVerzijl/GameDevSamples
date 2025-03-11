@@ -87,6 +87,39 @@ namespace SpaceDefence
             base.Draw(gameTime, spriteBatch);
         }
 
+        public void MoveUp()
+        {
+            _rectangleCollider.shape.Y -= 10;
+        }
+
+        public void MoveDown()
+        {
+            _rectangleCollider.shape.Y += 10;
+        }
+
+        public void MoveLeft()
+        {
+            _rectangleCollider.shape.X -= 10;
+        }
+        public void MoveRight()
+        {
+            _rectangleCollider.shape.X += 10;
+        }
+
+        public void UpdatePosition(Point newPosition)
+        {
+            _rectangleCollider.shape.Location = newPosition;
+        }
+
+        public int GetWidth()
+        {
+            return _rectangleCollider.shape.Width;
+        }
+
+        public int GetHeight()
+        {
+            return _rectangleCollider.shape.Height;
+        }
 
         public void Buff()
         {
