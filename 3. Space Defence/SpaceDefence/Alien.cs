@@ -45,7 +45,5 @@ namespace SpaceDefence
             spriteBatch.Draw(_texture, _circleCollider.GetBoundingBox(), Color.White);
             base.Draw(gameTime, spriteBatch);
         }
-
-
     }
 }

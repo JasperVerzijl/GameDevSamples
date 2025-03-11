@@ -12,7 +12,7 @@ namespace SpaceDefence
         public SpaceDefence()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = false;
 
             // Set the size of the screen
             _graphics.PreferredBackBufferWidth = 1920;
@@ -52,19 +52,19 @@ namespace SpaceDefence
             base.Update(gameTime);
             KeyboardState kstate = Keyboard.GetState();
             // move the spaceship
-            if (kstate.IsKeyDown(Keys.Up))
+            if (kstate.IsKeyDown(Keys.W))
             {
                 _gameManager.Player.MoveUp();
             }
-            if (kstate.IsKeyDown(Keys.Down))
+            if (kstate.IsKeyDown(Keys.S))
             {
                 _gameManager.Player.MoveDown();
             }
-            if (kstate.IsKeyDown(Keys.Left))
+            if (kstate.IsKeyDown(Keys.A))
             {
                 _gameManager.Player.MoveLeft();
             }
-            if (kstate.IsKeyDown(Keys.Right))
+            if (kstate.IsKeyDown(Keys.D))
             {
                 _gameManager.Player.MoveRight();
             }
@@ -84,7 +84,6 @@ namespace SpaceDefence
             {
                 newPosition.Y = -shipHeight;
             }
-
             if (playerPosition.X + shipWidth < 0)
             {
                 newPosition.X = GraphicsDevice.Viewport.Width;

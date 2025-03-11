@@ -133,7 +133,7 @@ namespace SpaceDefence
 
         /// <summary>
         /// Remove GameObject from the GameManager. 
-        /// The GameObject will be removed at the start of the next Update step and its Destroy() mehtod will be called.
+        /// The GameObject will be removed at the start of the next Update step and its Destroy() method will be called.
         /// After that the object will no longer receive any updates.
         /// </summary>
         /// <param name="gameObject"> The GameObject to Remove. </param>
