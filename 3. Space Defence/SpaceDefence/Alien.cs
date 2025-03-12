@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace SpaceDefence
 {
@@ -9,10 +10,12 @@ namespace SpaceDefence
         private CircleCollider _circleCollider;
         private Texture2D _texture;
         private float playerClearance = 100;
+        private float speed = 3.0f; // Speed of the alien
+        GameManager gm = GameManager.GetGameManager();
 
-        public Alien() 
+        public Alien()
         {
-            
+
         }
 
         public override void Load(ContentManager content)
@@ -26,18 +29,40 @@ namespace SpaceDefence
 
         public override void OnCollision(GameObject other)
         {
-            RandomMove();
+            if (other is Bullet)
+            {
+                RandomMove();
+            }
+            if (other is Laser)
+            {
+                RandomMove();
+            }
+            if (other == gm.Player)
+            {
+                speed = 2.5f;
+                RandomMove();
+            }
             base.OnCollision(other);
         }
 
         public void RandomMove()
         {
-            GameManager gm = GameManager.GetGameManager();
+            speed += 0.5f;
             _circleCollider.Center = gm.RandomScreenLocation();
 
             Vector2 centerOfPlayer = gm.Player.GetPosition().Center.ToVector2();
             while ((_circleCollider.Center - centerOfPlayer).Length() < playerClearance)
                 _circleCollider.Center = gm.RandomScreenLocation();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Vector2 playerPosition = gm.Player.GetPosition().Center.ToVector2();
+            Vector2 direction = playerPosition - _circleCollider.Center;
+            direction.Normalize();
+            _circleCollider.Center += direction * speed;
+
+            base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

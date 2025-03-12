@@ -63,10 +63,10 @@ namespace SpaceDefence
 
         public void CheckCollision()
         {
-            // Checks once for every pair of 2 GameObjects if the collide.
+            // Checks once for every pair of 2 GameObjects if they collide.
             for (int i = 0; i < _gameObjects.Count; i++)
             {
-                for (int j = i+1; j < _gameObjects.Count; j++)
+                for (int j = i + 1; j < _gameObjects.Count; j++)
                 {
                     if (_gameObjects[i].CheckCollision(_gameObjects[j]))
                     {
@@ -75,9 +75,8 @@ namespace SpaceDefence
                     }
                 }
             }
-            
         }
-        
+
         public void Update(GameTime gameTime) 
         {
             InputManager.Update();

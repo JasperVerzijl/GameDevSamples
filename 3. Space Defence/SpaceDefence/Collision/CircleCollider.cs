@@ -62,8 +62,8 @@ namespace SpaceDefence
         /// <returns>true there is any overlap between the two Circles.</returns>
         public override bool Intersects(CircleCollider other)
         {
-            // TODO Implement
-            return false;
+            float distance = Vector2.Distance(this.Center, other.Center);
+            return distance < (this.Radius + other.Radius);
         }
 
 
@@ -74,8 +74,7 @@ namespace SpaceDefence
         /// <returns>true there is any overlap between the Circle and the Rectangle.</returns>
         public override bool Intersects(RectangleCollider other)
         {
-            // TODO Implement
-            return  false;
+            return other.shape.Intersects(this.GetBoundingBox());
         }
         /// <summary>
         /// Gets whether or not the Circle intersects the Line

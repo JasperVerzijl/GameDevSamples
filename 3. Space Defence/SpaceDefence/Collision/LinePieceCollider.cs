@@ -113,8 +113,9 @@ namespace SpaceDefence
         /// <returns>true there is any overlap between the two Circles.</returns>
         public override bool Intersects(CircleCollider other)
         {
-            // TODO Implement hint, you can use the NearestPointOnLine function defined below.
-            return false;
+            Vector2 nearestPoint = NearestPointOnLine(other.Center);
+            float distance = Vector2.Distance(nearestPoint, other.Center);
+            return distance < other.Radius;
         }
 
         /// <summary>
@@ -144,10 +145,16 @@ namespace SpaceDefence
         /// </summary>
         /// <param name="other">The Vector you want to find the nearest point to.</param>
         /// <returns>The nearest point on the line.</returns>
-        public Vector2 NearestPointOnLine(Vector2 other)
+        public Vector2 NearestPointOnLine(Vector2 point)
         {
-            // TODO Implement
-            return Vector2.Zero;
+            Vector2 lineDirection = End - Start;
+            float lineLength = lineDirection.Length();
+            lineDirection.Normalize();
+
+            float projection = Vector2.Dot(point - Start, lineDirection);
+            projection = MathHelper.Clamp(projection, 0, lineLength);
+
+            return Start + lineDirection * projection;
         }
 
         /// <summary>
